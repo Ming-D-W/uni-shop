@@ -13,11 +13,11 @@
 			<!-- 标题区域 -->
 			<view class="history-title">
 				<text>搜索历史</text>
-				<uni-icons type="trash" size="17"></uni-icons>
+				<uni-icons type="trash" size="17" @click="cleanHistory"></uni-icons>
 			</view>
 			<!-- 列表区域 -->
 			<view class="history-list">
-				<uni-tag :text="item" v-for="(item, i) in historyList" :key="i"></uni-tag>
+				<uni-tag :text="item" v-for="(item, i) in historys" :key="i" @click="gotoGoodsList(item)"></uni-tag>
 			</view>
 		</view>
 	</view>
@@ -96,6 +96,19 @@
 				uni.navigateTo({
 					// 指定详情页面的 URL 地址，并传递 goods_id 参数
 					url: '/subpkg/goods_detail/goods_detail?goods_id=' + goods_id
+				})
+			},
+			// 清空搜索历史记录
+			cleanHistory() {
+				// 清空 data 中保存的搜索历史
+				this.historyList = []
+				// 清空本地存储中记录的搜索历史
+				uni.setStorageSync('kw', '[]')
+			},
+			// 点击跳转到商品列表页面
+			gotoGoodsList(kw) {
+				uni.navigateTo({
+					url: '/subpkg/goods_list/goods_list?query=' + kw
 				})
 			}
 		}
