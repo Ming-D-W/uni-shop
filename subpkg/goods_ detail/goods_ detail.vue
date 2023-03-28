@@ -21,7 +21,7 @@
 				</view>
 			</view>
 			<!-- 运费 -->
-			<view class="yf">快递：免运费</view>
+			<view class="yf">快递：免运费 -- {{cart.length}}</view>
 		</view>
 		<!-- 商品详情信息 -->
 		<rich-text :nodes="goods_info.goods_introduce"></rich-text>
@@ -39,7 +39,16 @@
 </template>
 
 <script>
+	// 从 vuex 中按需导出 mapState 辅助方法
+	import {
+		mapState
+	} from 'vuex'
 	export default {
+		computed: {
+			// 调用 mapState 方法，把 m_cart 模块中的 cart 数组映射到当前页面中，作为计算属性来使用
+			// ...mapState('模块的名称', ['要映射的数据名称1', '要映射的数据名称2'])
+			...mapState('m_cart', ['cart']),
+		},
 		data() {
 			return {
 				// 商品详情对象
